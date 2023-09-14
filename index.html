@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Boligberegner</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="text-center">
+            <h1 class="mb-4">SKATs ejendomsvurdering</h1>
+            <div class="form-group">
+                <label for="address">Adresse:</label>
+                <input type="text" id="address" class="form-control" placeholder="Indtast adresse">
+            </div>
+            <button class="btn btn-primary" onclick="calculatePrice()">Beregn pris</button>
+            <div id="result" class="mt-3"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            const addressField = document.getElementById("address");
+            
+            // Tjek om adressefeltet er tomt
+            if (!addressField.value.trim()) {
+                alert("Udfyld venligst adressefeltet");
+                return;
+            }
+
+            // Her genererer vi et tilfældigt beløb mellem 100.000 og 10.000.000 DKK.
+            const minPrice = 100000;
+            const maxPrice = 10000000;
+            const randomPrice = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
+
+            // Formatér tallet med punktummer som tusindseparator.
+            const formattedPrice = new Intl.NumberFormat().format(randomPrice);
+
+            const resultElement = document.getElementById("result");
+            resultElement.innerHTML = `<p class="font-weight-bold">Prisen for boligen er: ${formattedPrice} DKK</p>`;
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- DAWA Autocomplete script -->
+    <script src="https://dawa.aws.dk/js/autocomplete2/autocomplete.min.js"></script>
+    
+    <script>
+        // Initierer DAWA autocomplete på adressefeltet
+        DAWA.autocomplete.connect({
+            element: document.getElementById('address'),
+            select: function(selected) {
+                console.log(selected);
+            },
+            adgangsadresseOnly: false,
+            stormodtagerpostnumre: true,
+        });
+    </script>
+</body>
+</html>
